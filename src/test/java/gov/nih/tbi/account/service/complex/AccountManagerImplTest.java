@@ -74,10 +74,10 @@ public class AccountManagerImplTest {
   DatasetDao datasetDao;
 
   @Mock
-  Account account;
+  EntityMap entityMap;
 
   @Mock
-  EntityMap entityMap;
+  Account account;
 
   @Before
   public void setUp() throws Exception {
