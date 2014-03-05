@@ -1,6 +1,7 @@
 package gov.nih.tbi.account.service.complex;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
@@ -25,6 +26,7 @@ import gov.nih.tbi.repository.dao.DatasetDao;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -72,6 +74,9 @@ public class AccountManagerImplTest {
   DatasetDao datasetDao;
 
   @Mock
+  Account account;
+
+  @Mock
   EntityMap entityMap;
 
   @Before
@@ -97,6 +102,23 @@ public class AccountManagerImplTest {
             any(Long.class))).thenReturn(entityMap);
     manager.registerEntity((Account) null, null, null, null);
     verify(entityMap, times(1)).setPermission(any(PermissionType.class));
+    verify(entityMapDao, times(1)).save(any(EntityMap.class));
+  }
+
+  @Test
+  public void newAccountCanBeSavedByRegistering() {
+    when(
+        entityMapDao.get(any(Account.class), any(EntityType.class),
+            any(Long.class))).thenReturn(null);
+    ArgumentCaptor<EntityMap> captor = ArgumentCaptor.forClass(EntityMap.class);
+    manager.registerEntity(account, EntityType.DATA_ELEMENT, 123L,
+        PermissionType.ADMIN);
+    verify(entityMapDao).save(captor.capture());
+    EntityMap entityMap = captor.getValue();
+    assertEquals(Long.valueOf(123L), entityMap.getEntityId());
+    assertSame(account, entityMap.getAccount());
+    assertSame(EntityType.DATA_ELEMENT, entityMap.getType());
+    assertSame(PermissionType.ADMIN, entityMap.getPermission());
     verify(entityMapDao, times(1)).save(any(EntityMap.class));
   }
 
