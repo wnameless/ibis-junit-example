@@ -81,9 +81,6 @@ public class AccountManagerImplTest {
   @Mock
   Account account;
 
-  @Mock
-  Account account;
-
   @Rule
   public ExpectedException expectedEx = ExpectedException.none();
 
