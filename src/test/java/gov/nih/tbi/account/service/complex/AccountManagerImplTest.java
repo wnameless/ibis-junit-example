@@ -3,6 +3,7 @@ package gov.nih.tbi.account.service.complex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -120,6 +121,26 @@ public class AccountManagerImplTest {
     assertSame(EntityType.DATA_ELEMENT, entityMap.getType());
     assertSame(PermissionType.ADMIN, entityMap.getPermission());
     verify(entityMapDao, times(1)).save(any(EntityMap.class));
+  }
+
+  @Test
+  public void nullAccountIsNotAcceptedByRegisterEntity() {
+    fail();
+  }
+
+  @Test
+  public void nullEntityTypeIsNotAcceptedByRegisterEntity() {
+    fail();
+  }
+
+  @Test
+  public void nullEntityIdIsNotAcceptedByRegisterEntity() {
+    fail();
+  }
+
+  @Test
+  public void nullPermissionTypeIsNotAcceptedByRegisterEntity() {
+    fail();
   }
 
 }
