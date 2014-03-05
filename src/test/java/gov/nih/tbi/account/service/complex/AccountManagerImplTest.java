@@ -3,7 +3,6 @@ package gov.nih.tbi.account.service.complex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -124,28 +123,26 @@ public class AccountManagerImplTest {
     verify(entityMapDao, times(1)).save(any(EntityMap.class));
   }
 
-  @Test
+  @Test(expected = NullPointerException.class)
   public void nullAccountIsNotAcceptedByRegisterEntity() {
-    try {
-      manager.registerEntity((Account) null, EntityType.DATA_ELEMENT, 123L,
-          PermissionType.ADMIN);
-      fail();
-    } catch (NullPointerException e) {}
+    manager.registerEntity((Account) null, EntityType.DATA_ELEMENT, 123L,
+        PermissionType.ADMIN);
   }
 
-  @Test
+  @Test(expected = NullPointerException.class)
   public void nullEntityTypeIsNotAcceptedByRegisterEntity() {
-    fail();
+    manager.registerEntity(account, null, 123L, PermissionType.ADMIN);
   }
 
-  @Test
+  @Test(expected = NullPointerException.class)
   public void nullEntityIdIsNotAcceptedByRegisterEntity() {
-    fail();
+    manager.registerEntity(account, EntityType.DATA_ELEMENT, null,
+        PermissionType.ADMIN);
   }
 
-  @Test
+  @Test(expected = NullPointerException.class)
   public void nullPermissionTypeIsNotAcceptedByRegisterEntity() {
-    fail();
+    manager.registerEntity(account, EntityType.DATA_ELEMENT, 123L, null);
   }
 
 }
