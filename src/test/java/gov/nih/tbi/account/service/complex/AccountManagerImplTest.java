@@ -6,14 +6,17 @@ import gov.nih.tbi.commons.service.AccountManager;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 
 public class AccountManagerImplTest {
 
+  @InjectMocks
   AccountManagerImpl manager;
 
   @Before
   public void setUp() throws Exception {
-    manager = new AccountManagerImpl();
+    MockitoAnnotations.initMocks(this);
   }
 
   @Test
