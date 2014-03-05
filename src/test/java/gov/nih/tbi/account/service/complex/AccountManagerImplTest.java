@@ -76,6 +76,9 @@ public class AccountManagerImplTest {
   DatasetDao datasetDao;
 
   @Mock
+  Account account;
+
+  @Mock
   EntityMap entityMap;
 
   @Mock
