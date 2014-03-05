@@ -25,7 +25,9 @@ import gov.nih.tbi.commons.service.util.MailEngine;
 import gov.nih.tbi.repository.dao.DatasetDao;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -79,6 +81,9 @@ public class AccountManagerImplTest {
   @Mock
   Account account;
 
+  @Rule
+  public ExpectedException expectedEx = ExpectedException.none();
+
   @Before
   public void setUp() throws Exception {
     MockitoAnnotations.initMocks(this);
@@ -123,25 +128,33 @@ public class AccountManagerImplTest {
     verify(entityMapDao, times(1)).save(any(EntityMap.class));
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void nullAccountIsNotAcceptedByRegisterEntity() {
+    expectedEx.expect(NullPointerException.class);
+    expectedEx.expectMessage("Account can't be null.");
     manager.registerEntity((Account) null, EntityType.DATA_ELEMENT, 123L,
         PermissionType.ADMIN);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void nullEntityTypeIsNotAcceptedByRegisterEntity() {
+    expectedEx.expect(NullPointerException.class);
+    expectedEx.expectMessage("EntityType can't be null.");
     manager.registerEntity(account, null, 123L, PermissionType.ADMIN);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void nullEntityIdIsNotAcceptedByRegisterEntity() {
+    expectedEx.expect(NullPointerException.class);
+    expectedEx.expectMessage("EntityId can't be null.");
     manager.registerEntity(account, EntityType.DATA_ELEMENT, null,
         PermissionType.ADMIN);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void nullPermissionTypeIsNotAcceptedByRegisterEntity() {
+    expectedEx.expect(NullPointerException.class);
+    expectedEx.expectMessage("PermissionType can't be null.");
     manager.registerEntity(account, EntityType.DATA_ELEMENT, 123L, null);
   }
 
