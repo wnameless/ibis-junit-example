@@ -121,10 +121,10 @@ public class AccountManagerImpl extends BaseManagerImpl implements
    */
   public void registerEntity(Account account, EntityType type, Long entityId,
       PermissionType permission) {
-    checkNotNull(account);
-    checkNotNull(type);
-    checkNotNull(entityId);
-    checkNotNull(permission);
+    checkNotNull(account, "Account can't be null.");
+    checkNotNull(type, "EntityType can't be null.");
+    checkNotNull(entityId, "EntityId can't be null.");
+    checkNotNull(permission, "PermissionType can't be null.");
 
     EntityMap oldMap = entityMapDao.get(account, type, entityId);
     if (oldMap != null) {
