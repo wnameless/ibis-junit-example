@@ -79,9 +79,6 @@ public class AccountManagerImplTest {
   @Mock
   Account account;
 
-  @Mock
-  Account account;
-
   @Before
   public void setUp() throws Exception {
     MockitoAnnotations.initMocks(this);
