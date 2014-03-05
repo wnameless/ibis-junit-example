@@ -1,5 +1,6 @@
 package gov.nih.tbi.account.service.complex;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import gov.nih.tbi.commons.service.AccountManager;
 
@@ -18,6 +19,12 @@ public class AccountManagerImplTest {
   @Test
   public void accountManagerInterfaceIsImplemented() {
     assertTrue(manager instanceof AccountManager);
+  }
+
+  @Test
+  public void classNameIsUsedForLoggerName() {
+    assertEquals(AccountManagerImpl.class.getName(),
+        AccountManagerImpl.logger.getName());
   }
 
 }
