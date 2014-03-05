@@ -101,7 +101,8 @@ public class AccountManagerImplTest {
     when(
         entityMapDao.get(any(Account.class), any(EntityType.class),
             any(Long.class))).thenReturn(entityMap);
-    manager.registerEntity((Account) null, null, null, null);
+    manager.registerEntity(account, EntityType.DATA_ELEMENT, 123L,
+        PermissionType.ADMIN);
     verify(entityMap, times(1)).setPermission(any(PermissionType.class));
     verify(entityMapDao, times(1)).save(any(EntityMap.class));
   }
