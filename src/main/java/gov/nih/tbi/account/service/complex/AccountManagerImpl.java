@@ -1,5 +1,6 @@
 package gov.nih.tbi.account.service.complex;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import gov.nih.tbi.CoreConstants;
 import gov.nih.tbi.ModulesConstants;
 import gov.nih.tbi.account.dao.AccountDao;
@@ -120,6 +121,10 @@ public class AccountManagerImpl extends BaseManagerImpl implements
    */
   public void registerEntity(Account account, EntityType type, Long entityId,
       PermissionType permission) {
+    checkNotNull(account);
+    checkNotNull(type);
+    checkNotNull(entityId);
+    checkNotNull(permission);
 
     EntityMap oldMap = entityMapDao.get(account, type, entityId);
     if (oldMap != null) {

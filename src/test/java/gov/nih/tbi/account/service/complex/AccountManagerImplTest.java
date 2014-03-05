@@ -125,7 +125,11 @@ public class AccountManagerImplTest {
 
   @Test
   public void nullAccountIsNotAcceptedByRegisterEntity() {
-    fail();
+    try {
+      manager.registerEntity((Account) null, EntityType.DATA_ELEMENT, 123L,
+          PermissionType.ADMIN);
+      fail();
+    } catch (NullPointerException e) {}
   }
 
   @Test
