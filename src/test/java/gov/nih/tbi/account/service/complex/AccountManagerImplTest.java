@@ -22,6 +22,7 @@ package gov.nih.tbi.account.service.complex;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -43,11 +44,14 @@ import gov.nih.tbi.commons.service.StaticReferenceManager;
 import gov.nih.tbi.commons.service.util.MailEngine;
 import gov.nih.tbi.repository.dao.DatasetDao;
 
+import java.lang.annotation.Annotation;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 
 public class AccountManagerImplTest {
@@ -118,6 +122,17 @@ public class AccountManagerImplTest {
     manager.registerEntity((Account) null, null, null, null);
     verify(entityMap, times(1)).setPermission(any(PermissionType.class));
     verify(entityMapDao, times(1)).save(any(EntityMap.class));
+  }
+
+  public void springScopeSingletonAnnotationIsAnnotated() {
+    for (Annotation anno : AccountManagerImpl.class.getDeclaredAnnotations()) {
+      if (anno instanceof Scope) {
+        Scope scopeAnno = (Scope) anno;
+        assertEquals("singleton", scopeAnno.value());
+        return;
+      }
+    }
+    fail();
   }
 
 }
