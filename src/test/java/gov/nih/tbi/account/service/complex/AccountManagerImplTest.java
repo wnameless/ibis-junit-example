@@ -22,12 +22,16 @@ package gov.nih.tbi.account.service.complex;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import gov.nih.tbi.commons.service.AccountManager;
+
+import java.lang.annotation.Annotation;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Scope;
 
 public class AccountManagerImplTest {
 
@@ -48,6 +52,18 @@ public class AccountManagerImplTest {
   public void classNameIsUsedForLoggerName() {
     assertEquals(AccountManagerImpl.class.getName(),
         AccountManagerImpl.logger.getName());
+  }
+
+  @Test
+  public void springScopeSingletonAnnotationIsAnnotated() {
+    for (Annotation anno : AccountManagerImpl.class.getDeclaredAnnotations()) {
+      if (anno instanceof Scope) {
+        Scope scopeAnno = (Scope) anno;
+        assertEquals("singleton", scopeAnno.value());
+        return;
+      }
+    }
+    fail();
   }
 
 }
